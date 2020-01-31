@@ -1,4 +1,6 @@
 pragma solidity >=0.4.21;
+import "usingtellor/contracts/UsingTellor.sol";
+
 
 contract TellorFund is UsingTellor{
 
@@ -42,19 +44,19 @@ contract TellorFund is UsingTellor{
 
 
     //be sure to approve first
-	function createProposal(string _title, string _desc,uint _minAmountUSD, uint _daystilComplete) public returns(uint _id){
+	function createProposal(string calldata _title, string calldata _desc,uint _minAmountUSD, uint _daystilComplete) external returns(uint _id){
 		Tellor _tellor = Tellor(tellorUserContract.tellorStorageAddress());
         require(_tellor.transferFrom(msg.sender,address(0),1e18), "Virgin Sacrifice Failed");
-		require(Tellor.transfer(1 TRB, 0 address));
 		require(_daystilComplete < 30);
 		_id = proposalCount;
 		proposalCount++;
-		idToProsal[_id] = Proposal({
+		idToProposal[_id] = Proposal({
 			title:_title,
 			description:_desc,
 			owner:msg.sender,
 			minAmountUSD:_minAmountUSD,
 			expirationDate:now + _daystilComplete * 86400,
+			trbBalance:0,
 			open:true,
 			passed:false
 		});
@@ -62,19 +64,21 @@ contract TellorFund is UsingTellor{
 
 	}
 
-	function fund(uint _id, uint _amountTRB){
+	function fund(uint _id, uint _amountTRB) external {
 		require(_amountTRB > 0);
-		Proposal thisProp = idToProposal[_id];
+		Proposal storage thisProp = idToProposal[_id];
 		require(thisProp.open);
 		Tellor _tellor = Tellor(tellorUserContract.tellorStorageAddress());
         require(_tellor.transferFrom(msg.sender,address(this),_amountTRB), "Funding Failed");
-        Statement thisStatement=addressToStatements[msg.sender];
-        thisStatement[id] = _id;
-        thisStatement[amount] = thisStatement[amount] + _amountTRB;
+        Statement memory thisStatement= Statement({
+        	id:_id,
+        	amount:_amountTRB
+        	});
+        addressToStatements[msg.sender].push(thisStatement);
         thisProp.trbBalance += _amountTRB;
 
-        Funder thisFunder = Funder({
-        	address:msg.sender,
+        Funder memory thisFunder = Funder({
+        	funder:msg.sender,
         	amount:_amountTRB
         });
         idToFunders[_id].push(thisFunder);
@@ -83,33 +87,33 @@ contract TellorFund is UsingTellor{
 	}
 
 	function closeProposal(uint _id) external{
-		Proposal thisProp = idToProposal[_id];
+		Proposal storage thisProp = idToProposal[_id];
 		require(thisProp.open);
-		require(now > expirationDate);
-
+		require(now > thisProp.expirationDate);
+		Tellor _tellor = Tellor(tellorUserContract.tellorStorageAddress());
 		if(percentFunded(_id) > 100){
 			thisProp.passed = true;
 			_tellor.transfer(thisProp.owner,thisProp.trbBalance);
 		}
 		else{
-			Funders[] theseFunders = idToFunders[_id];
+			Funder[] storage theseFunders = idToFunders[_id];
 			for(uint i=0;i < theseFunders.length;i++){
-				availableForWithdraw[theseFunders.funder] += theseFunders.amount; 
+				availableForWithdraw[theseFunders[i].funder] += theseFunders[i].amount; 
 			}
 		}
 		uint _index = idToOpenIndex[_id];
-		if(_index == openProposals.length - 1;){
+		if(_index == openProposals.length - 1){
 			openProposals.length--;
 		}
 		else{
-			uint _lastID = openProposals[openProposals.length - 1];
+			uint _lastId = openProposals[openProposals.length - 1];
 			openProposals[_index] = _lastId;
 			idToOpenIndex[_lastId] = _index;
 			openProposals.length--;
 			idToOpenIndex[_id] = 0;
 		}
 		thisProp.open = false;
-		emit ProposalClosed(_id,thisProp.passed,thisProp.trbBalance)
+		emit ProposalClosed(_id,thisProp.passed,thisProp.trbBalance);
 		thisProp.trbBalance = 0;
 	}
 
@@ -120,32 +124,37 @@ contract TellorFund is UsingTellor{
 		_tellor.transfer(msg.sender,_amt);
  	}
 
-	function getAllOpenProposals() external view returns(uint[]){
+	function getAllOpenProposals() external view returns(uint[] memory){
 		return openProposals;
 	}
 
-	function getProposalById(uint _id) external view returns(string,string,uint,uint,bool,bool){
-		Proposals t = idToProposal[_id];
-		return (t.title,t.description,t.owner,t.minAmountUSD,t.expirationDate,t.trbBalance,t.open,t.passed)
+	function getProposalById(uint _id) external view returns(string memory,string memory,address,uint,uint,uint,bool,bool){
+		Proposal memory t = idToProposal[_id];
+		return (t.title,t.description,t.owner,t.minAmountUSD,t.expirationDate,t.trbBalance,t.open,t.passed);
 	}
 
 
-	function getProposalsByAddress(address _funder) public view returns(uint[] propArray,uint[] amountArray){
-		Statement[] theseStatements = addressToStatements[_funder];
+	function getProposalsByAddress(address _funder) public view returns(uint[] memory propArray,uint[] memory amountArray){
+		Statement[] memory theseStatements = addressToStatements[_funder];
+		propArray = new uint[](theseStatements.length);
+		amountArray = new uint[](theseStatements.length);
 		for(uint i=0;i < theseStatements.length;i++){
-			propArray.push(theseStatements.id);
-			amountArray.push(thisStatements.amount);
+			propArray[i] = theseStatements[i].id;
+			amountArray[i]= theseStatements[i].amount;
 		}
+		return (propArray,amountArray);
 	}
 
-	function getAddressesById(uint _id) public view returns(address[] addArray){
-			Funders[] theseFunders = idToFunders[_id];
+	function getAddressesById(uint _id) public view returns(address[] memory addArray){
+			Funder[] memory theseFunders = idToFunders[_id];
+			addArray = new address[](theseFunders.length);
 			for(uint i=0;i < theseFunders.length;i++){
-				addArray.push(theseFunders.funder);
+				addArray[i] = theseFunders[i].funder;
 			}
 	}
 
 	function percentFunded(uint _id) public view returns(uint){
+			Proposal memory thisProp = idToProposal[_id];
 			return thisProp.minAmountUSD * 100 / (thisProp.trbBalance* viewTellorPrice()/1e18);
 	}
 
