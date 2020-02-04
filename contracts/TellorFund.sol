@@ -4,7 +4,8 @@ import "usingtellor/contracts/UsingTellor.sol";
 
 contract TellorFund is UsingTellor{
 
-	uint proposalCount;
+	uint public proposalCount;
+	uint public tellorPriceID;
 	uint[] openProposals;
 
 	struct Proposal{
@@ -37,8 +38,9 @@ contract TellorFund is UsingTellor{
 	event ProposalFunded(uint _id, address _funder, uint _amount);
 	event ProposalClosed(uint _id, bool _funded, uint _amount);
 
-    constructor(address _userContract) public UsingTellor(_userContract){
+    constructor(address _userContract, uint _tellorPriceID) public UsingTellor(_userContract){
     	proposalCount + 1;
+    	tellorPriceID = _tellorPriceID;
     	openProposals.length++;
     }
 
@@ -162,7 +164,7 @@ contract TellorFund is UsingTellor{
 		bool _didget;
 		uint _value;
 		uint _timestamp;
-		(_didget,_value,_timestamp) = getAnyDataAfter(50,now - 60 minutes);
+		(_didget,_value,_timestamp) = getAnyDataAfter(tellorPriceID,now - 60 minutes);
 	}
 
 }

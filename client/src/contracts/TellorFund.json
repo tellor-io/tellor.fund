@@ -18659,7 +18659,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.16",
-  "updatedAt": "2020-01-31T21:18:17.018Z",
+  "updatedAt": "2020-02-03T19:05:45.781Z",
   "devdoc": {
     "methods": {
       "addTip(uint256,uint256)": {
