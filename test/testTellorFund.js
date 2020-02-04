@@ -95,7 +95,7 @@ contract('Testing Derivative Contracts', function (accounts) {
         t = await new web3.eth.Contract(TellorMaster.abi)
         master = await t.deploy({data:masterBytes,arguments:[tellor._address]}).send({from:accounts[0], gas:4000000})
         /**********End: Manually Deploy Tellor*******************************/
-        await web3.eth.sendTransaction({to:master._address,from:accounts[0],gas:2000000,data:tellor.methods.requestData("1","1",10000,0).encodeABI()})      
+        await web3.eth.sendTransaction({to:master._address,from:accounts[0],gas:2000000,data:tellor.methods.requestData("1","1",1,0).encodeABI()})      
         userContract = await new web3.eth.Contract(UserContract.abi)
         userContract = await userContract.deploy({data:UserContract.bytecode,arguments:[master._address]}).send({from:accounts[0], gas:4000000})
         oracleIDDescriptions = await new web3.eth.Contract(OracleIDDescriptions.abi)
@@ -105,7 +105,7 @@ contract('Testing Derivative Contracts', function (accounts) {
         await oracleIDDescriptions.methods.defineTellorCodeToStatusCode(2,404).send({from:accounts[0]})
         await oracleIDDescriptions.methods.defineTellorIdToBytesID(1,bytes).send({from:accounts[0]})
         await userContract.methods.setOracleIDDescriptors(oracleIDDescriptions._address).send({from:accounts[0]})
-        tellorFund = await TellorFund.new(userContract._address,1)
+        tellorFund = await TellorFund.new(userContract._address,1,1)
     })
 
     it("Test Full Proposal and Settlement - passing", async function(){
@@ -113,61 +113,111 @@ contract('Testing Derivative Contracts', function (accounts) {
             await web3.eth.sendTransaction({to:master._address,from:accounts[i],gas:2000000,data:tellor.methods.submitMiningSolution("1",1,1200).encodeABI()})      
         }
         await advanceTime(86400 * 2);
-        string calldata _title, string calldata _desc,uint _minAmountUSD, uint _daystilComplet
-        await tellorfund.methods.createProposal("test","give Nick a raise",1200,2).send();
-        let count = await tellorfund.proposalCount.call();
+        await web3.eth.sendTransaction({to:master._address,from:accounts[1],gas:2000000,data:tellor.methods.approve(tellorFund.address,web3.utils.toWei("1",'ether')).encodeABI()})   
+        await tellorFund.createProposal("test","give Nick a raise",1200,2,{from:accounts[1]});
+        let count = await tellorFund.getProposalCount();
         assert(count == 1, "count should be correct");
-        await tellorfund.methods.fund(1,1).send()
+        await web3.eth.sendTransaction({to:master._address,from:accounts[2],gas:2000000,data:tellor.methods.approve(tellorFund.address,web3.utils.toWei("1",'ether')).encodeABI()})      
+        await tellorFund.fund(1,web3.utils.toWei("1",'ether'),{from:accounts[2]})
         await advanceTime(86400 * 2);
-        let price = await tellorfund.methods.viewTellorPrice().call();
-        assert(price == 1200);
-        await tellorfund.methods.closeProposal(1).send()
-        let prop = getProposalById(uint _id);
-        assert(each piece)
-
-
-    })
+        let id = await tellorFund.tellorPriceID.call();
+        assert(id == 1, "tellor ID should be correct");
+        let vars = await userContract.methods.getCurrentValue(1).call()
+        let price = await tellorFund.viewTellorPrice();
+        assert(price - 1200 == 0, "price should be 1200");
+        let prop = await tellorFund.getProposalById(1);
+		assert(prop[0] == "test", "title should be correct")
+		assert(prop[1] == "give Nick a raise", "desc should be correct")
+		assert(prop[2] == accounts[1], "owner should be correct")
+		assert(prop[3] == 1200, "minAmountUSD should be correct")
+		assert(prop[4] > _date + 86400 * 2, "date should be correct")
+		assert(prop[5] == web3.utils.toWei("1",'ether'), "amount TRB should be correct")
+		assert(prop[6] == true, "is open should be correct")
+		assert(prop[7] == false, "passed should be correct")
+		let obal = await master.methods.balanceOf(accounts[1]).call();
+        await tellorFund.closeProposal(1,{from:accounts[1]});
+        let nbal = await master.methods.balanceOf(accounts[1]).call();
+        assert(web3.utils.fromWei(nbal) - 1 == web3.utils.fromWei(obal), "balances should change properly");
+	})
+      
     it("Test Full Proposal and Settlement -failing", async function(){
         for(var i =1;i<6;i++){
             await web3.eth.sendTransaction({to:master._address,from:accounts[i],gas:2000000,data:tellor.methods.submitMiningSolution("1",1,1200).encodeABI()})      
         }
         await advanceTime(86400 * 2);
-        await tellorfund.methods.createProposal("test","give Nick a raise",2400,2).send();
-        await tellorfund.methods.fund(1,1).send()
-        let pctFunded = tellor.methods.percentFunded(1).call()
+        await web3.eth.sendTransaction({to:master._address,from:accounts[1],gas:2000000,data:tellor.methods.approve(tellorFund.address,web3.utils.toWei("1",'ether')).encodeABI()})
+        await tellorFund.createProposal("test","give Nick a raise",2400,2,{from:accounts[1]});
+        await web3.eth.sendTransaction({to:master._address,from:accounts[2],gas:2000000,data:tellor.methods.approve(tellorFund.address,web3.utils.toWei("1",'ether')).encodeABI()})      
+        await tellorFund.fund(1,web3.utils.toWei("1",'ether'),{from:accounts[2]})
+        let pctFunded = await tellorFund.percentFunded(1)
         assert(pctFunded == 50,"Percent funded should work")
-        await tellorfund.methods.closeProposal(1).send()
+        let obal = await master.methods.balanceOf(accounts[2]).call();
         await advanceTime(86400 * 2);
-        await tellorfund.methods.withdrawMoney().send();
-        asset(he got his money back)
-        let prop = getProposalById(uint _id);
-        assert(each piece)
+        await tellorFund.closeProposal(1,{from:accounts[1]})
+        await tellorFund.withdrawMoney({from:accounts[2]});
+        let nbal = await master.methods.balanceOf(accounts[2]).call();
+        assert(web3.utils.fromWei(nbal) - 1 == web3.utils.fromWei(obal), "he should get his money back");
+        let prop = await tellorFund.getProposalById(1);
+		assert(prop[0] == "test", "title should be correct")
+		assert(prop[1] == "give Nick a raise", "desc should be correct")
+		assert(prop[2] == accounts[1], "owner should be correct")
+		assert(prop[3] == 2400, "minAmountUSD should be correct")
+		assert(prop[4] > _date + 86400 * 2, "date should be correct")
+		assert(prop[5] == 0, "amount TRB should be correct")
+		assert(prop[6] == false, "is open should be correct")
+		assert(prop[7] == false, "passed should be correct")
     })
     it("Test Lots of open proposals", async function(){
         for(var i =1;i<6;i++){
             await web3.eth.sendTransaction({to:master._address,from:accounts[i],gas:2000000,data:tellor.methods.submitMiningSolution("1",1,1200).encodeABI()}) 
-            await tellorfund.methods.createProposal("test","give Nick a raise",1000*i,i).send();     
-        }
-        await advanceTime(86400 * 2);
-        await tellorfund.methods.createProposal("test","give Nick a raise",2400,2).send();
-        let count = await tellorfund.methods.getAllOpenProposals().call();
-        assert(count.length == 5, "count of proposals should work");
-        assert(count[0] == 1, "open proposal array should work")
-        for(var i =1;i<=3;i++){
-        	await tellorfund.methods.fund(i,1).send(from:accounts[1])
-   		}
-   		await tellorfund.methods.fund(1,1).send(from: accounts[2])
-   		 let myguys = tellorfund.methods.getProposalsByAddress(accounts[1])
-   		assert(myguys.length == 3, "proposals by address should work")
-   		assert(myguys[0] == 2, "proposal by address should be correct")
-   		let addbyid = await tellorfund.methods.getAddressesById(1);
-   		assert(addbyid.length == 2, "addbyid should be proper length")
-   		assert(addbyid[0] == 1, "addbyid should be correct")
-        await tellorfund.methods.closeProposal(1).send()
-        await tellorfund.methods.withdrawMoney().send();
-        asset(he got his money back)
 
-        assert it was closed properly
+        }
+        for(var i =1;i<6;i++){
+            await web3.eth.sendTransaction({to:master._address,from:accounts[i],gas:2000000,data:tellor.methods.approve(tellorFund.address,web3.utils.toWei("1",'ether')).encodeABI()})
+        	await tellorFund.createProposal("test","give Nick a raise",1000,i,{from:accounts[i]});   
+        }  
+        await advanceTime(86400 * 2);
+        let count = await tellorFund.getAllOpenProposals();
+        assert(count.length - 1 == 5, "count of proposals should work");
+        assert(count[1] == 1, "open proposal array should work")
+        for(var i =1;i<=3;i++){
+        	        await web3.eth.sendTransaction({to:master._address,from:accounts[1],gas:2000000,data:tellor.methods.approve(tellorFund.address,web3.utils.toWei("1",'ether')).encodeABI()})	
+        	await tellorFund.fund(i,web3.utils.toWei("1",'ether'),{from:accounts[1]})
+        	await web3.eth.sendTransaction({to:master._address,from:accounts[i],gas:2000000,data:tellor.methods.approve(tellorFund.address,web3.utils.toWei("1",'ether')).encodeABI()})	
+        	await tellorFund.fund(1,web3.utils.toWei("1",'ether'),{from:accounts[i]})
+   		}
+   		let myguys = await tellorFund.getProposalsByAddress(accounts[1])
+   		assert(myguys.propArray.length == 4, "proposals by address should work")
+   		assert(myguys.propArray[1] == 1, "proposal by address should be correct")
+   		let addbyid = await tellorFund.getAddressesById(1);
+   		assert(addbyid.length == 4, "addbyid should be proper length")
+   		assert(addbyid[0] == accounts[1], "addbyid should be correct")
+        let obal1 = await master.methods.balanceOf(accounts[1]).call();
+        let obal2 = await master.methods.balanceOf(accounts[2]).call();
+        let obal3 = await master.methods.balanceOf(accounts[3]).call();
+        await advanceTime(86400 * 2);
+        let prop = await tellorFund.getProposalById(2);
+		assert(prop[0] == "test", "title should be correct")
+		assert(prop[1] == "give Nick a raise", "desc should be correct")
+		assert(prop[2] == accounts[2], "owner should be correct")
+		assert(prop[3] == 1000, "minAmountUSD should be correct")
+		assert(prop[4] > _date + 86400 * 2, "date should be correct")
+		assert(prop[5] == web3.utils.toWei("1",'ether'), "amount TRB should be correct")
+		assert(prop[6] == true, "is open should be correct")
+		assert(prop[7] == false, "passed should be correct")
+		for(var i =1;i<=3;i++){
+			await tellorFund.closeProposal(i)
+		}
+		let nbal1 = await master.methods.balanceOf(accounts[1]).call();
+        let nbal2 = await master.methods.balanceOf(accounts[2]).call();
+        let nbal3 = await master.methods.balanceOf(accounts[3]).call();
+        assert(web3.utils.fromWei(nbal1) > web3.utils.fromWei(obal1), "he should get his money back1");
+        assert(web3.utils.fromWei(nbal2) > web3.utils.fromWei(obal2), "he should get his money back2");
+        assert(web3.utils.fromWei(nbal3) > web3.utils.fromWei(obal3), "he should get his money back3");
+        count = await tellorFund.getAllOpenProposals();
+        assert(count.length - 1== 2, "count of proposals should work");
+        assert(count[1] == 5, "open proposal array should work")
+        assert(count[2] == 4, "open proposal array should work")
     })
 
 })

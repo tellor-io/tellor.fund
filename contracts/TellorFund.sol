@@ -4,8 +4,9 @@ import "usingtellor/contracts/UsingTellor.sol";
 
 contract TellorFund is UsingTellor{
 
-	uint public proposalCount;
+	uint private proposalCount;
 	uint public tellorPriceID;
+	uint public granularity;
 	uint[] openProposals;
 
 	struct Proposal{
@@ -38,9 +39,10 @@ contract TellorFund is UsingTellor{
 	event ProposalFunded(uint _id, address _funder, uint _amount);
 	event ProposalClosed(uint _id, bool _funded, uint _amount);
 
-    constructor(address _userContract, uint _tellorPriceID) public UsingTellor(_userContract){
-    	proposalCount + 1;
+    constructor(address _userContract, uint _tellorPriceID, uint _granularity) public UsingTellor(_userContract){
+    	proposalCount = 1;
     	tellorPriceID = _tellorPriceID;
+    	granularity = _granularity;
     	openProposals.length++;
     }
 
@@ -48,7 +50,7 @@ contract TellorFund is UsingTellor{
     //be sure to approve first
 	function createProposal(string calldata _title, string calldata _desc,uint _minAmountUSD, uint _daystilComplete) external returns(uint _id){
 		Tellor _tellor = Tellor(tellorUserContract.tellorStorageAddress());
-        require(_tellor.transferFrom(msg.sender,address(0),1e18), "Virgin Sacrifice Failed");
+        require(_tellor.transferFrom(msg.sender,address(this),1e18), "Virgin Sacrifice Failed");
 		require(_daystilComplete < 30);
 		_id = proposalCount;
 		proposalCount++;
@@ -62,8 +64,11 @@ contract TellorFund is UsingTellor{
 			open:true,
 			passed:false
 		});
+		idToOpenIndex[_id] = openProposals.length;
 		openProposals.push(_id);
 
+
+	emit NewProposal(_id,_title,_desc,_minAmountUSD,_daystilComplete);
 	}
 
 	function fund(uint _id, uint _amountTRB) external {
@@ -91,9 +96,10 @@ contract TellorFund is UsingTellor{
 	function closeProposal(uint _id) external{
 		Proposal storage thisProp = idToProposal[_id];
 		require(thisProp.open);
+		require(_id > 0);
 		require(now > thisProp.expirationDate);
 		Tellor _tellor = Tellor(tellorUserContract.tellorStorageAddress());
-		if(percentFunded(_id) > 100){
+		if(percentFunded(_id) >= 100){
 			thisProp.passed = true;
 			_tellor.transfer(thisProp.owner,thisProp.trbBalance);
 		}
@@ -157,14 +163,27 @@ contract TellorFund is UsingTellor{
 
 	function percentFunded(uint _id) public view returns(uint){
 			Proposal memory thisProp = idToProposal[_id];
-			return thisProp.minAmountUSD * 100 / (thisProp.trbBalance* viewTellorPrice()/1e18);
+			return  100 * (thisProp.trbBalance* viewTellorPrice()/1e18) / thisProp.minAmountUSD ;
 	}
 
 	function viewTellorPrice() public view returns(uint){
 		bool _didget;
 		uint _value;
 		uint _timestamp;
-		(_didget,_value,_timestamp) = getAnyDataAfter(tellorPriceID,now - 60 minutes);
+		(_didget,_value,_timestamp) = getCurrentValue(tellorPriceID);
+		if(_timestamp > now - 60 minutes){
+			for(uint i=120;i< 2400;i++){
+				(_didget,_value,_timestamp) = getAnyDataAfter(tellorPriceID,now - i * 60);
+				if(_didget && _timestamp < now - 60 minutes){
+					i = 2400;
+				}
+			}
+
+		}
+		return _value/granularity;
 	}
 
+	function getProposalCount() public view returns(uint){
+		return proposalCount -1;
+	}
 }
