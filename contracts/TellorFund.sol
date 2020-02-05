@@ -136,6 +136,10 @@ contract TellorFund is UsingTellor{
 		return openProposals;
 	}
 
+	function getAvailableForWithdraw(address _user) external returns(uint){
+		return availableForWithdraw[_user];
+	}
+
 	function getProposalById(uint _id) external view returns(string memory,string memory,address,uint,uint,uint,bool,bool){
 		Proposal memory t = idToProposal[_id];
 		return (t.title,t.description,t.owner,t.minAmountUSD,t.expirationDate,t.trbBalance,t.open,t.passed);
@@ -171,11 +175,17 @@ contract TellorFund is UsingTellor{
 		uint _value;
 		uint _timestamp;
 		(_didget,_value,_timestamp) = getCurrentValue(tellorPriceID);
-		if(_timestamp > now - 60 minutes){
+		if(!_didget){
+			return 0;
+		}
+		else if(_timestamp > now - 60 minutes){
 			for(uint i=120;i< 2400;i++){
 				(_didget,_value,_timestamp) = getAnyDataAfter(tellorPriceID,now - i * 60);
 				if(_didget && _timestamp < now - 60 minutes){
 					i = 2400;
+				}
+				else if(!_didget){
+					return 0;
 				}
 			}
 

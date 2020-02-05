@@ -1,16 +1,34 @@
 import React, { Component } from "react";
 import TellorFund from "./contracts/TellorFund.json";
 import getWeb3 from "./getWeb3";
-
+import openProposalsTable from "./components/openProposalsTable"
+import myProposalsTable from "./components/myProposalsTable"
 import "./App.css";
+import {
+  EmailIcon,
+  TelegramIcon,
+  TwitterIcon
+} from "react-share";
+
+const contractAddress = process.env.REACT_APP_CONTRACT;
+console.log(contractAddress);
+
 
 class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
+  state = { web3: null,
+            accounts: null,
+            contract: null,
+            openTable: null,
+            myTable: null, 
+            price: 0,
+            availableBalance: 0 };
 
   componentDidMount = async () => {
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
+      const openTable = await openProposalsTable();
+      const myTable = await myProposalsTable();
 
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
@@ -20,12 +38,15 @@ class App extends Component {
       const deployedNetwork = TellorFund.networks[networkId];
       const instance = new web3.eth.Contract(
         TellorFund.abi,
-        deployedNetwork && deployedNetwork.address,
+        deployedNetwork && contractAddress,
       );
 
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
+     const availableBalance = await instance.methods.getAvailableForWithdraw(accounts[0]).call();
+
+      const price = await instance.methods.viewTellorPrice().call();
+
+      // Update state with the result.;
+           await this.setState({web3,accounts,openTable,myTable,availableBalance,price,contract:instance})
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -35,37 +56,41 @@ class App extends Component {
     }
   };
 
-  runExample = async () => {
-    const { accounts, contract } = this.state;
-
-    // Stores a given value, 5 by default.
-    await contract.methods.set(5).send({ from: accounts[0] });
-
-    // Get the value from the contract to prove it worked.
-    const response = await contract.methods.get().call();
-
-    // Update state with the result.
-    this.setState({ storageValue: response });
-  };
-
   render() {
     if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
+      return <div>Loading tellor.fund</div>;
     }
     return (
       <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 40</strong> of App.js.
-        </p>
-        <div>The stored value is: {this.state.storageValue}</div>
+        <div className="Header">
+          <h1>tellor.fund</h1>
+        </div>
+
+        <div className ="Price">
+          <h3> tellor Price : ${this.state.price} </h3>
+        </div>
+
+        <div className="OpenTable">
+          {this.state.openTable}
+        </div>
+
+        <div className="Buttons">
+          <p><button>Fund</button></p>
+          <p><button>New Proposal </button></p>
+          <p><button> Close Proposal</button></p>
+          <p><button> Withdraw</button> {this.state.availableBalance} TRB</p> 
+        </div>
+
+        <div className="MyTable">
+          {this.state.myTable}
+        </div>
+
+        <div className="Social">
+          <TwitterIcon size={32} round={true} />
+          <TelegramIcon size={32} round={true} />
+          <EmailIcon size={32} round={true} />
       </div>
+    </div>
     );
   }
 }
