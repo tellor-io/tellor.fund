@@ -196,4 +196,7 @@ contract TellorFund is UsingTellor{
 	function getProposalCount() public view returns(uint){
 		return proposalCount -1;
 	}
+	function tellorAddress() public view returns(address){
+		return tellorUserContract.tellorStorageAddress();
+	}
 }

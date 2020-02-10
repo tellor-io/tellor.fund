@@ -40,14 +40,14 @@
     "absolutePath": "usingtellor/contracts/interfaces/ADOInterface.sol",
     "exportedSymbols": {
       "ADOInterface": [
-        1859
+        1869
       ]
     },
-    "id": 1860,
+    "id": 1870,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1847,
+        "id": 1857,
         "literals": [
           "solidity",
           "^",
@@ -63,9 +63,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 1859,
+        "id": 1869,
         "linearizedBaseContracts": [
-          1859
+          1869
         ],
         "name": "ADOInterface",
         "nodeType": "ContractDefinition",
@@ -73,22 +73,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1858,
+            "id": 1868,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "resultFor",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1850,
+              "id": 1860,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1849,
+                  "id": 1859,
                   "name": "Id",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1858,
+                  "scope": 1868,
                   "src": "173:10:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -97,7 +97,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 1848,
+                    "id": 1858,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "173:7:5",
@@ -113,15 +113,15 @@
               "src": "172:12:5"
             },
             "returnParameters": {
-              "id": 1857,
+              "id": 1867,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1852,
+                  "id": 1862,
                   "name": "timestamp",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1858,
+                  "scope": 1868,
                   "src": "208:17:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -130,7 +130,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1851,
+                    "id": 1861,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "208:7:5",
@@ -144,10 +144,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1854,
+                  "id": 1864,
                   "name": "outcome",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1858,
+                  "scope": 1868,
                   "src": "227:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -156,7 +156,7 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 1853,
+                    "id": 1863,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
                     "src": "227:6:5",
@@ -170,10 +170,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1856,
+                  "id": 1866,
                   "name": "status",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1858,
+                  "scope": 1868,
                   "src": "243:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -182,7 +182,7 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 1855,
+                    "id": 1865,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
                     "src": "243:6:5",
@@ -197,14 +197,14 @@
               ],
               "src": "207:50:5"
             },
-            "scope": 1859,
+            "scope": 1869,
             "src": "154:104:5",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 1860,
+        "scope": 1870,
         "src": "126:135:5"
       }
     ],
@@ -214,14 +214,14 @@
     "absolutePath": "usingtellor/contracts/interfaces/ADOInterface.sol",
     "exportedSymbols": {
       "ADOInterface": [
-        1859
+        1869
       ]
     },
-    "id": 1860,
+    "id": 1870,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1847,
+        "id": 1857,
         "literals": [
           "solidity",
           "^",
@@ -237,9 +237,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 1859,
+        "id": 1869,
         "linearizedBaseContracts": [
-          1859
+          1869
         ],
         "name": "ADOInterface",
         "nodeType": "ContractDefinition",
@@ -247,22 +247,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1858,
+            "id": 1868,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "resultFor",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1850,
+              "id": 1860,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1849,
+                  "id": 1859,
                   "name": "Id",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1858,
+                  "scope": 1868,
                   "src": "173:10:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -271,7 +271,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 1848,
+                    "id": 1858,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "173:7:5",
@@ -287,15 +287,15 @@
               "src": "172:12:5"
             },
             "returnParameters": {
-              "id": 1857,
+              "id": 1867,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1852,
+                  "id": 1862,
                   "name": "timestamp",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1858,
+                  "scope": 1868,
                   "src": "208:17:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -304,7 +304,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1851,
+                    "id": 1861,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "208:7:5",
@@ -318,10 +318,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1854,
+                  "id": 1864,
                   "name": "outcome",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1858,
+                  "scope": 1868,
                   "src": "227:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -330,7 +330,7 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 1853,
+                    "id": 1863,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
                     "src": "227:6:5",
@@ -344,10 +344,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1856,
+                  "id": 1866,
                   "name": "status",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1858,
+                  "scope": 1868,
                   "src": "243:13:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -356,7 +356,7 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 1855,
+                    "id": 1865,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
                     "src": "243:6:5",
@@ -371,14 +371,14 @@
               ],
               "src": "207:50:5"
             },
-            "scope": 1859,
+            "scope": 1869,
             "src": "154:104:5",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 1860,
+        "scope": 1870,
         "src": "126:135:5"
       }
     ],
@@ -390,7 +390,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.16",
-  "updatedAt": "2020-02-05T20:29:33.082Z",
+  "updatedAt": "2020-02-06T19:42:04.458Z",
   "devdoc": {
     "methods": {}
   },
