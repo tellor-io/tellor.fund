@@ -1,4 +1,4 @@
-class NameForm extends React.Component {
+class CreateProposalFrom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: ''};
@@ -12,8 +12,15 @@ class NameForm extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
-    event.preventDefault();
+    let response = await myContract.methods
+      .createPayment(1, address)  //function in contract
+      .send({
+        from: window.web3.currentProvider.selectedAddress,
+        to: address,
+        value: amount,
+        gasPrice: '20000000000' 
+      });
+    console.log("response: ", response);
   }
 
   render() {

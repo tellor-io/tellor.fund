@@ -66,6 +66,11 @@ contract TellorFund is UsingTellor{
 		});
 		idToOpenIndex[_id] = openProposals.length;
 		openProposals.push(_id);
+		Statement memory thisStatement= Statement({
+        	id:_id,
+        	amount:0
+        });
+        addressToStatements[msg.sender].push(thisStatement);
 
 
 	emit NewProposal(_id,_title,_desc,_minAmountUSD,_daystilComplete);
@@ -140,9 +145,9 @@ contract TellorFund is UsingTellor{
 		return availableForWithdraw[_user];
 	}
 
-	function getProposalById(uint _id) external view returns(string memory,string memory,address,uint,uint,uint,bool,bool){
+	function getProposalById(uint _id) external view returns(string memory,string memory,address,uint,uint,uint,bool,bool,uint){
 		Proposal memory t = idToProposal[_id];
-		return (t.title,t.description,t.owner,t.minAmountUSD,t.expirationDate,t.trbBalance,t.open,t.passed);
+		return (t.title,t.description,t.owner,t.minAmountUSD,t.expirationDate,t.trbBalance,t.open,t.passed,100 * (t.trbBalance* viewTellorPrice()/1e18) / t.minAmountUSD);
 	}
 
 

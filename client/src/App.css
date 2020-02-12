@@ -35,3 +35,16 @@
   align-items: center;
   justify-content: center;
 }
+
+.Button{
+  padding:1vh;
+  align-items: left;
+  justify-content: center
+}
+
+.ButtonContainer{
+  align-items: center;
+  justify-content: center
+}
+
+label {display: block}
