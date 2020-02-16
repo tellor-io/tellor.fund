@@ -1,0 +1,8 @@
+{
+  "name": "tellor.fund",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "cd client && npm run start",
+  }
+}
