@@ -1,10 +1,12 @@
 import BootstrapTable from 'react-bootstrap-table-next';
 import React, { Component }  from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
 export const openProposalsTable = async (instance) =>{
   
     const columns = [{
-            dataField: 'id',
+          dataField: 'id',
           text: '',
           sort: true
         },
@@ -55,7 +57,7 @@ export const openProposalsTable = async (instance) =>{
 
 
               products.push({
-                id:i,
+                id:res[i],
                 title:res2['0'],
                 details:res2['1'],
                 amount:res2['3'],
@@ -71,7 +73,7 @@ export const openProposalsTable = async (instance) =>{
     catch{
       console.log("no open proposals")
     }
-    return (<BootstrapTable keyField='id' data={ products } columns={ columns } />)
+    return (<BootstrapTable keyField='id' data={ products } columns={ columns } striped hover/>)
 }
 
 ;

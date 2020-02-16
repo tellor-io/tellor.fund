@@ -15260,7 +15260,7 @@
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
   "networks": {
-    "1581534787479": {
+    "1581691961714": {
       "events": {
         "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
           "anonymous": false,
@@ -15308,63 +15308,12 @@
         }
       },
       "links": {},
-      "address": "0x45ABD26Fcc2A0A7b81909005dD7086E138F686C0",
-      "transactionHash": "0x63d047decceea1cd01afbff0d45a1ab228156a0044b5bfac0003795a6d2dbf1b"
-    },
-    "1581535438495": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "_previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "_newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        },
-        "0x4e8ad04c3fba0cbea0ab1df84b92a72a289ddf64da15f4c1c396891d37c39b01": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "_newPrice",
-              "type": "uint256"
-            }
-          ],
-          "name": "NewPriceSet",
-          "type": "event",
-          "signature": "0x4e8ad04c3fba0cbea0ab1df84b92a72a289ddf64da15f4c1c396891d37c39b01"
-        },
-        "0x5c6c85f31e475f047482022539bfe2a3941c15e582053b7420f22e5e8cc5d7f6": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "_descriptorSet",
-              "type": "address"
-            }
-          ],
-          "name": "NewDescriptorSet",
-          "type": "event",
-          "signature": "0x5c6c85f31e475f047482022539bfe2a3941c15e582053b7420f22e5e8cc5d7f6"
-        }
-      },
-      "links": {},
-      "address": "0xE1646D82896A3b7DcB88d84F69b571cFBC8B2F77",
-      "transactionHash": "0xd25c060c50a3012daacd9b1aaa6d1db76053b8f8a26e373cc7c74a50a5752767"
+      "address": "0x387D30BFd25F3097DeC4F8cb8f4073bC76700d48",
+      "transactionHash": "0xa8c6c00f0edb7c82c6d153ba25f7a779a22309ebe972e1a31f5dea446f10da61"
     }
   },
   "schemaVersion": "3.0.16",
-  "updatedAt": "2020-02-12T19:24:13.547Z",
+  "updatedAt": "2020-02-14T14:54:37.802Z",
   "devdoc": {
     "methods": {
       "addTipWithEther(uint256)": {

@@ -13738,7 +13738,7 @@
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
   "networks": {
-    "1581534787479": {
+    "1581691961714": {
       "events": {
         "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925": {
           "anonymous": false,
@@ -13788,65 +13788,12 @@
         }
       },
       "links": {},
-      "address": "0xC5464A4a5470E48EE95026Ff5B0623cf53E7CFb0",
-      "transactionHash": "0x0339c65a492e3b332564f5217c48c0447b561ebb19b374ef384ccdcd5d5fd5cc"
-    },
-    "1581535438495": {
-      "events": {
-        "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "name": "_owner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "name": "_spender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "_value",
-              "type": "uint256"
-            }
-          ],
-          "name": "Approval",
-          "type": "event",
-          "signature": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925"
-        },
-        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "name": "_from",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "name": "_to",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "_value",
-              "type": "uint256"
-            }
-          ],
-          "name": "Transfer",
-          "type": "event",
-          "signature": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
-        }
-      },
-      "links": {},
-      "address": "0x839D6bE089242508cD50Ec3069Fc436202efd750",
-      "transactionHash": "0xc0d189d9a51ae175e5a50bc0180ca74856aef66db076e93b8a5e3fec23d3aed1"
+      "address": "0x08B1D7da9005dfb02631a2ff6bd867bE293B2c24",
+      "transactionHash": "0x4bc34abb8b7c8b3393a8d10a7b4b56fae69b8e2ef36623ae58a69d01f5a3c3af"
     }
   },
   "schemaVersion": "3.0.16",
-  "updatedAt": "2020-02-12T19:24:13.460Z",
+  "updatedAt": "2020-02-14T14:54:37.720Z",
   "devdoc": {
     "details": "Contais the methods related to transfers and ERC20. Tellor.sol and TellorGetters.sol\r reference this library for function's logic.\r Many of the functions have been commented out for simplicity. \r",
     "methods": {

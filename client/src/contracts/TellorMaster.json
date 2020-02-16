@@ -7610,7 +7610,7 @@
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
   "networks": {
-    "1581534787479": {
+    "1581691961714": {
       "events": {
         "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925": {
           "anonymous": false,
@@ -7673,82 +7673,14 @@
         }
       },
       "links": {
-        "TellorTransfer": "0xC5464A4a5470E48EE95026Ff5B0623cf53E7CFb0"
+        "TellorTransfer": "0x08B1D7da9005dfb02631a2ff6bd867bE293B2c24"
       },
-      "address": "0x596751E0D3C089Dd4FEc8D7804cb6059783B0E2F",
-      "transactionHash": "0xaa34b0005d233c326cf92e2a74b316d50e32e0d3c24ac5658a7c2c6511ada75e"
-    },
-    "1581535438495": {
-      "events": {
-        "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "name": "_owner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "name": "_spender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "_value",
-              "type": "uint256"
-            }
-          ],
-          "name": "Approval",
-          "type": "event",
-          "signature": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925"
-        },
-        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "name": "_from",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "name": "_to",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "_value",
-              "type": "uint256"
-            }
-          ],
-          "name": "Transfer",
-          "type": "event",
-          "signature": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
-        },
-        "0xc2d1449eb0b6547aa426e09d9942a77fa4fc8cd3296305b3163e22452e0bcb8d": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "_newTellor",
-              "type": "address"
-            }
-          ],
-          "name": "NewTellorAddress",
-          "type": "event",
-          "signature": "0xc2d1449eb0b6547aa426e09d9942a77fa4fc8cd3296305b3163e22452e0bcb8d"
-        }
-      },
-      "links": {
-        "TellorTransfer": "0x839D6bE089242508cD50Ec3069Fc436202efd750"
-      },
-      "address": "0xa72622882F03518363E2204Dc389EDAfeD7C66f3",
-      "transactionHash": "0x4b71aec56bf9b4bfe61a7498079d28c7650dfc000496c26ab5b6307c30372e3c"
+      "address": "0xF64897AF2037a85AD3B16A8De3B428907dC197Fa",
+      "transactionHash": "0x4721ec22a5eb22d426a98f5f89c6ec50bbbc63c58c8bd7012a9c191afe79b12e"
     }
   },
   "schemaVersion": "3.0.16",
-  "updatedAt": "2020-02-12T19:24:13.531Z",
+  "updatedAt": "2020-02-14T14:54:37.783Z",
   "devdoc": {
     "details": "This is the Master contract with all tellor getter functions and delegate call to Tellor. \r The logic for the functions on this contract is saved on the TellorGettersLibrary, TellorTransfer, \r TellorGettersLibrary, and TellorStake\r",
     "methods": {

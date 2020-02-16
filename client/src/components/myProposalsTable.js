@@ -10,7 +10,7 @@ export const myProposalsTable = async (instance,myAddress) =>{
       },
         {
           dataField: 'id',
-		      text: 'My IDs'
+		      text: 'my ids'
 		    },
 		    {
 		      dataField: 'title',
@@ -45,7 +45,7 @@ export const myProposalsTable = async (instance,myAddress) =>{
     catch{
       console.log("you have no proposals")
     }
-		return(<BootstrapTable keyField='uID' data={ products } columns={ columns } />)
+		return(<BootstrapTable keyField='uID' data={ products } columns={ columns } striped hover/>)
   };
 
 

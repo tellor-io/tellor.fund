@@ -11,7 +11,7 @@ import {
   TwitterIcon
 } from "react-share";
 
-const contractAddress ="0x3d3921A50ba6431bdf866515D92d2F8C99D44Dad";
+const contractAddress ="0x7d67E614d92b9D070839954dfd82ceEc7daFDAeD";
 console.log(contractAddress);
 
 
@@ -54,7 +54,7 @@ class App extends Component {
       const instance = await new web3.eth.Contract(TellorFund.abi,this.state.contractAddress);
       console.log(instance.methods)
 
-      const availableBalance = await instance.methods.getAvailableForWithdraw(accounts[0]).call();
+      const availableBalance = web3.utils.fromWei(await instance.methods.getAvailableForWithdraw(accounts[0]).call());
       console.log("made it to here2")
       const price = await instance.methods.viewTellorPrice().call();
       const tellorAddress = await instance.methods.tellorAddress().call()
@@ -82,7 +82,7 @@ class App extends Component {
   //   this.setState({value: event.target.value});
   // }
 
-    handleChange(e) {
+    handleChange(e,target) {
     // If you are using babel, you can use ES 6 dictionary syntax
     // let change = { [e.target.name] = e.target.value }
     let change = {}
@@ -101,7 +101,7 @@ class App extends Component {
     });
   }
   handleWithdrawSubmit(event) {
-    this.state.contract.methods.withdrawMoney(this.state.availableBalance).send({
+    this.state.contract.methods.withdrawMoney().send({
           from: this.state.accounts[0],
           to: contractAddress,
           value:0,
@@ -158,70 +158,71 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <div className="Header">
-          <h1>tellor.fund</h1>
-        </div>
-
-        <div className ="Price">
-          <h3> tellor Price : ${this.state.price} </h3>
-        </div>
-
-        <div className="OpenTable">
-          {this.state.openTable}
-        </div>
-
-        <div className="ButtonContainer">
-          <div className="Button">
-            <button onClick={this.handleFundSubmit}>Fund</button>
-              <label>
-                Proposal ID:
-                <input type="number" name="fundID" value={this.state.fundID} onChange={this.handleChange}/>
-             </label> 
-                           <label>
-                Amount TRB:
-                <input type="number" name="fundAmount" value={this.state.fundAmount} onChange={this.handleChange}/>
-             </label> 
+        <div className="HeaderContainer">
+          <div className="Header">
+            <div className="innerHeader">
+               <h1 className="HText">
+               <img className="Swoosh" src="./SwooshBlack@2x.png" alt="TellorSwoosh"></img> 
+               tellor.fund
+               </h1>
+            </div>
           </div>
-          <div className="Button">
-            <button onClick={this.handleCreateSubmit}>New Proposal</button>
-              <label>
-                  Title:
-                  <input type="text" name="title" value={this.state.title} onChange={this.handleChange}/>
-               </label>           
-               <label>
-                  Description:
-                  <input type="text"name="desc" value={this.state.desc} onChange={this.handleChange} />
-               </label>
-               <label>
-                    Min Amount USD:
-                  <input type="number" name="minAmountUSD" value={this.state.minAmountUSD} onChange={this.handleChange} />
-               </label>
-               <label>
-                  Days Open:
-                  <input type="number" name="daystilComplete" value={this.state.daystilComplete} onChange={this.handleChange} />
-               </label>
-            </div>
-            <div className="Button">
-              <button onClick={this.handleCloseSubmit}> Close Proposal</button>
-                <label>
-                  Proposal ID:
-                  <input type="number" name="closeID" value={this.state.closeID} onChange={this.handleChange}/>
-                </label> 
-            </div>
-            <div className="Button"> 
-              <p><button onClick={this.handleWithdrawSubmit}>Withdraw</button> {this.state.availableBalance} TRB</p>
-            </div>
         </div>
-
-        <div className="MyTable">
-          {this.state.myTable}
+        <div className="PriceContainer">
+          <div className ="Price">
+            <h3> trb price : ${this.state.price} </h3>
+          </div>
         </div>
-
-        <div className="Social">
-          <TwitterIcon size={32} round={true} />
-          <TelegramIcon size={32} round={true} />
-          <EmailIcon size={32} round={true} />
-      </div>
+        <div className="OpenTableContainer">
+          <div className="OpenTable">
+          <div className="inner">
+              {this.state.openTable}
+            </div>
+          </div>
+        </div>
+        <div className="FormContainer">
+            <div className="ButtonContainer">
+              <div className="Button">
+                <button onClick={this.handleFundSubmit}>fund</button>
+                  <input type="number" placeholder="Proposal ID" name="fundID" onChange={this.handleChange}/>
+                  <input type="number" placeholder="Amount TRB" name="fundAmount" onChange={this.handleChange}/>
+              </div>
+              <div className="Button">
+                <button onClick={this.handleCreateSubmit}>new</button>
+                <input type="text" name="title" placeholder="Title" onChange={this.handleChange}/>
+                <input type="text"name="desc" placeholder="Description" onChange={this.handleChange} />
+                <input type="number" name="minAmountUSD" placeholder="Min USD" onChange={this.handleChange} />
+                <input type="number" name="daystilComplete" placeholder="Days Open" onChange={this.handleChange} />
+              </div>
+              <div className="Button">
+                  <button onClick={this.handleCloseSubmit}>close</button>
+                  <input type="number" name="closeID" placeholder="Proposal ID" onChange={this.handleChange}/>
+              </div>
+              <div className="Button"> 
+                  <p><button onClick={this.handleWithdrawSubmit}>withdraw</button> {'\u00A0'} {this.state.availableBalance} TRB</p>
+              </div>
+              </div>
+          </div>
+        <div className="OpenTableContainer">
+            <div className="MyTable">
+              <div className="inner">
+              {this.state.myTable}
+            </div>
+          </div>
+        </div>
+        <div className="SocialContainer">
+          <div className="Social">
+            <a href="https://twitter.com/wearetellor">
+              <TwitterIcon size={32} round={true} />
+            </a>
+            <a href="https://t.me/tellorchannel">
+              <TelegramIcon size={32} round={true} />
+            </a>
+            <a href="malito:info@tellor.io">
+              <EmailIcon size={32} round={true} />
+            </a>
+        </div>
+       </div>
     </div>
     );
   }

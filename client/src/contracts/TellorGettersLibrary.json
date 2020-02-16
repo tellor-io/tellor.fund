@@ -7030,7 +7030,7 @@
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
   "networks": {
-    "1581534787479": {
+    "1581691961714": {
       "events": {
         "0xc2d1449eb0b6547aa426e09d9942a77fa4fc8cd3296305b3163e22452e0bcb8d": {
           "anonymous": false,
@@ -7047,32 +7047,12 @@
         }
       },
       "links": {},
-      "address": "0xF3be0911aFa0fE9F6AF62f4A35bAcE7D9B9C2EdD",
-      "transactionHash": "0x9a8667368d67cf9cc3cf54715aa558907f82958623e1995c9e52843204195c37"
-    },
-    "1581535438495": {
-      "events": {
-        "0xc2d1449eb0b6547aa426e09d9942a77fa4fc8cd3296305b3163e22452e0bcb8d": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "_newTellor",
-              "type": "address"
-            }
-          ],
-          "name": "NewTellorAddress",
-          "type": "event",
-          "signature": "0xc2d1449eb0b6547aa426e09d9942a77fa4fc8cd3296305b3163e22452e0bcb8d"
-        }
-      },
-      "links": {},
-      "address": "0x9073178BF3DcBE5Ab18D52179aA03fEa042f726a",
-      "transactionHash": "0x5902672d4da8b02f21fd86e1589be08fd872e76d5c8271e54e2bd2bb4bc29a56"
+      "address": "0x7f3B82759bCd30BC5F2bBb70a76a01598de422dE",
+      "transactionHash": "0x7f636caf4e64fdcec1e07e69b76a0ebeab19cf4fe1f0aa9221e5eae6b9e8ddff"
     }
   },
   "schemaVersion": "3.0.16",
-  "updatedAt": "2020-02-12T19:24:13.503Z",
+  "updatedAt": "2020-02-14T14:54:37.767Z",
   "devdoc": {
     "methods": {}
   },

@@ -16,6 +16,7 @@ module.exports = function(callback) {
         TellorFund.deployed().then(async function(t){
             console.log(t.address)
             let masterAddress = await t.tellorAddress()
+            console.log(masterAddres)
             let tellor = new web3.eth.Contract(Tellor.abi)
             console.log("here")
             console.log(accounts)

@@ -22903,7 +22903,7 @@
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
   "networks": {
-    "1581534787479": {
+    "1581691961714": {
       "events": {
         "0x2139066e053196905e5351420c0068d9eaa024551a0b8198eeb4cbaa120c97d1": {
           "anonymous": false,
@@ -23004,116 +23004,12 @@
         }
       },
       "links": {},
-      "address": "0xae162c6377f5b4EA3dAB89491fb1cd97C32FBe5B",
-      "transactionHash": "0xdc583ba374157ca3b9fc9aed6f9fe9fb4cfe839a5c67bd81c197b0d1981c2ba5"
-    },
-    "1581535438495": {
-      "events": {
-        "0x2139066e053196905e5351420c0068d9eaa024551a0b8198eeb4cbaa120c97d1": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "_id",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "_title",
-              "type": "string"
-            },
-            {
-              "indexed": false,
-              "name": "_desc",
-              "type": "string"
-            },
-            {
-              "indexed": false,
-              "name": "_minAmountUSD",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "_daystilComplete",
-              "type": "uint256"
-            }
-          ],
-          "name": "NewProposal",
-          "type": "event",
-          "signature": "0x2139066e053196905e5351420c0068d9eaa024551a0b8198eeb4cbaa120c97d1"
-        },
-        "0x5b47478b1a9bcccc0683800f537f513a17c66ebb7a9b7e2773053b37fc83bb05": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "_id",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "_funder",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "_amount",
-              "type": "uint256"
-            }
-          ],
-          "name": "ProposalFunded",
-          "type": "event",
-          "signature": "0x5b47478b1a9bcccc0683800f537f513a17c66ebb7a9b7e2773053b37fc83bb05"
-        },
-        "0x769c308d4fdba3700f25352c34ea872c7dbe3a52475adf9650f609457ae71176": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "_id",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "_funded",
-              "type": "bool"
-            },
-            {
-              "indexed": false,
-              "name": "_amount",
-              "type": "uint256"
-            }
-          ],
-          "name": "ProposalClosed",
-          "type": "event",
-          "signature": "0x769c308d4fdba3700f25352c34ea872c7dbe3a52475adf9650f609457ae71176"
-        },
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "_previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "_newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0x3d3921A50ba6431bdf866515D92d2F8C99D44Dad",
-      "transactionHash": "0x9706fadfb4764ff654dc225a99842599fd4b31d15c744197266e601cf440a1be"
+      "address": "0x7d67E614d92b9D070839954dfd82ceEc7daFDAeD",
+      "transactionHash": "0x7a4a39f08ec296a308c7381ff2c3823559b0ecd30253bbbb2415bd9088de1bbd"
     }
   },
   "schemaVersion": "3.0.16",
-  "updatedAt": "2020-02-12T19:24:13.565Z",
+  "updatedAt": "2020-02-14T14:54:37.820Z",
   "devdoc": {
     "methods": {
       "addTip(uint256,uint256)": {

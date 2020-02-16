@@ -7541,7 +7541,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.16",
-  "updatedAt": "2020-02-12T19:13:26.615Z",
+  "updatedAt": "2020-02-14T14:53:03.859Z",
   "devdoc": {
     "methods": {
       "addTip(uint256,uint256)": {
