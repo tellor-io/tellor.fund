@@ -11,7 +11,7 @@ import {
   TwitterIcon
 } from "react-share";
 
-const contractAddress ="0x7d67E614d92b9D070839954dfd82ceEc7daFDAeD";
+const contractAddress ="0x72F24506bad04B64BE1bb9332F0DEA5C5d519630"//"0x7d67E614d92b9D070839954dfd82ceEc7daFDAeD";
 console.log(contractAddress);
 
 
@@ -44,31 +44,17 @@ class App extends Component {
     this.handleFundSubmit = this.handleFundSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     try {
-      // Get network provider and web3 instance.
       const web3 = await getWeb3();
-
-      // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
-
-      // Get the contract instance.
       const instance = await new web3.eth.Contract(TellorFund.abi,this.state.contractAddress);
-      console.log(instance.methods)
-
       const availableBalance = web3.utils.fromWei(await instance.methods.getAvailableForWithdraw(accounts[0]).call());
-      console.log("made it to here2")
       const price = await instance.methods.viewTellorPrice().call();
       const tellorAddress = await instance.methods.tellorAddress().call()
-      console.log(tellorAddress)
       const tellorInstance = await new web3.eth.Contract(Tellor.abi,tellorAddress);
-      console.log("made it to here")
-
       const openTable = await openProposalsTable(instance);
       const myTable = await myProposalsTable(instance,accounts[0]);
-
-      // Update state with the result.;
       await this.setState({web3,accounts,openTable,myTable,availableBalance,price,tellorAddress,tellorInstance,contract:instance})
     } catch (error) {
-      // Catch any errors for any of the above operations.
       alert(
         `Failed to load web3, accounts, or contract. Check console for details.`,
       );
@@ -77,14 +63,8 @@ class App extends Component {
 
   };
 
-  // handleChange(event) {
-  //   console.log(event.target)
-  //   this.setState({value: event.target.value});
-  // }
 
-    handleChange(e,target) {
-    // If you are using babel, you can use ES 6 dictionary syntax
-    // let change = { [e.target.name] = e.target.value }
+  handleChange(e,target) {
     let change = {}
     change[e.target.name] = e.target.value
     console.log("changing",e.target)
