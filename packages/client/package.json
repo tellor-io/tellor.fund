@@ -40,5 +40,8 @@
   },
   "devDependencies": {
     "webpack-cli": "^3.3.11"
+  },
+    "engines": {
+    "node": "9.x"
   }
 }
