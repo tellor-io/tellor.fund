@@ -13,9 +13,9 @@
     "web3": "1.2.2"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap",
+    "bootstrap": "lerna bootstrap --scope=client",
     "clean": "lerna clean",
-    "build": "npm run bootstrap && lerna run build",
+    "build": "npm run bootstrap && lerna run build --scope=client",
     "test": "lerna run test",
     "start": "node ./packages/client/src/server.js"
   },
