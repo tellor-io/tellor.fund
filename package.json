@@ -17,7 +17,7 @@
     "clean": "lerna clean",
     "build": "npm run bootstrap && lerna run build",
     "test": "lerna run test",
-    "start": "node ./client/src/server.js"
+    "start": "node ./packages/client/src/server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
