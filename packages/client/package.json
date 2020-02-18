@@ -19,7 +19,7 @@
     "start": "cross-env NODE_PATH=src SASS_PATH=node_modules:src/scss npm run start-js",
     "start-js": "react-scripts start",
     "build": "cross-env NODE_PATH=src react-scripts build",
-    "lerna-build": "lerna bootstrap",
+    "lerna-build": "lerna bootstrap --scope=client",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
