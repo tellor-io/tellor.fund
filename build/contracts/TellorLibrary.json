@@ -34668,8 +34668,8 @@
       "transactionHash": "0xfbaef7e344982c75842dc2626a885c5e6a6b6c2d4dbc219d2eb0933bf7290505"
     }
   },
-  "schemaVersion": "3.0.16",
-  "updatedAt": "2020-02-14T14:54:37.744Z",
+  "schemaVersion": "3.0.11",
+  "updatedAt": "2020-02-20T17:56:01.984Z",
   "devdoc": {
     "details": "Contains the functions' logic for the Test Tellor contract where miners can submit the proof of work\r along with the value and smart contracts can requestData and tip miners.\r Many of the functions have been commented out for simplicity. \r",
     "methods": {

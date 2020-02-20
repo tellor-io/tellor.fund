@@ -3555,8 +3555,8 @@
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.0.16",
-  "updatedAt": "2020-02-14T14:53:03.890Z",
+  "schemaVersion": "3.0.11",
+  "updatedAt": "2020-02-20T17:56:02.015Z",
   "devdoc": {
     "details": "Contains all the variables/structs used by Tellor\r This test file is exactly the same as the production/mainnet file. \r",
     "methods": {},
