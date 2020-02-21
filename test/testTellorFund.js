@@ -187,7 +187,8 @@ contract('Testing Derivative Contracts', function (accounts) {
         	await tellorFund.fund(1,web3.utils.toWei("1",'ether'),{from:accounts[i]})
    		}
    		let myguys = await tellorFund.getProposalsByAddress(accounts[1])
-   		assert(myguys.propArray.length == 4, "proposals by address should work")
+        console.log("myguys.propArray.length", myguys.propArray.length)
+   		assert(myguys.propArray.length == 5, "proposals by address should work--5")
    		assert(myguys.propArray[1] == 1, "proposal by address should be correct")
    		let addbyid = await tellorFund.getAddressesById(1);
    		assert(addbyid.length == 4, "addbyid should be proper length")

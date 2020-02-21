@@ -12,8 +12,8 @@ import "usingtellor/contracts/UsingTellor.sol";
 contract TellorFund is UsingTellor{
     /*Variables*/
 	uint private proposalCount;
-	uint public tellorPriceID;
-	uint public granularity;
+	uint public tellorPriceID; //??
+	uint public granularity; //??
 	uint[] openProposals;
 
 	struct Proposal{
@@ -36,9 +36,10 @@ contract TellorFund is UsingTellor{
 		uint id;
 		uint amount;
 	}
+
 	mapping(uint => Proposal) idToProposal;
 	mapping(uint => Funder[]) idToFunders;
-	mapping(address => Statement[]) addressToStatements;
+	mapping(address => Statement[]) addressToStatements;//???
 	mapping(uint => uint) idToOpenIndex;
 	mapping(address => uint) availableForWithdraw;
 
@@ -51,7 +52,7 @@ contract TellorFund is UsingTellor{
     * @dev Sets the usercontract, tellor's request data Id and 
     * amount of decimals to include(granularity)
     * @param _userContract is the userContract address for Tellor
-    * @param _tellorPriceID is Tellor's request ID to read data from
+    * @param _tellorPriceID is Tellor's request ID to read data from ??
     * @param _granularity is the amount of decimals to include in the price feed
     */
     constructor(address _userContract, uint _tellorPriceID, uint _granularity) public UsingTellor(_userContract){
@@ -71,7 +72,7 @@ contract TellorFund is UsingTellor{
     */
 	function createProposal(string calldata _title, string calldata _desc,uint _minAmountUSD, uint _daystilComplete) external returns(uint _id){
 		Tellor _tellor = Tellor(tellorUserContract.tellorStorageAddress());
-        require(_tellor.transferFrom(msg.sender,address(this),1e18), "Virgin Sacrifice Failed");
+        require(_tellor.transferFrom(msg.sender,address(this),1e18), "Fee to create proposal failed to tranfer");
 		require(_daystilComplete < 30);
 		_id = proposalCount;
 		proposalCount++;
@@ -91,7 +92,7 @@ contract TellorFund is UsingTellor{
         	id:_id,
         	amount:0
         });
-        addressToStatements[msg.sender].push(thisStatement);
+        addressToStatements[msg.sender].push(thisStatement);//what is the statememt???
 
 
 	emit NewProposal(_id,_title,_desc,_minAmountUSD,_daystilComplete);
