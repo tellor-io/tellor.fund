@@ -69,6 +69,7 @@ contract TellorFund is UsingTellor{
     * @param _desc is the proposal description
     * @param _minAmountUSD is the minimun USD threshold to fund before the proposal goes to a vote???
     * @param _daystilComplete number of days allowed for funding???
+    * @return proposal Id
     */
 	function createProposal(string calldata _title, string calldata _desc,uint _minAmountUSD, uint _daystilComplete) external returns(uint _id){
 		Tellor _tellor = Tellor(tellorUserContract.tellorStorageAddress());
@@ -126,7 +127,8 @@ contract TellorFund is UsingTellor{
 	}
 
     /*
-    * @dev Closes the specified proposal
+    * @dev Closes the specified proposal. Closes the proposal, it makes the funders 
+    * funds available for withdraw if the proposal fails, and updates the proposal array. 
     * @param _id is the proposal id
     */
 	function closeProposal(uint _id) external{
@@ -162,7 +164,7 @@ contract TellorFund is UsingTellor{
 	}
 
     /*
-    * @dev Allows funders to withdraw their funds
+    * @dev Allows funders to withdraw their funds if the proposal was unsuccessful
     */
  	function withdrawMoney() external{
  		Tellor _tellor = Tellor(tellorUserContract.tellorStorageAddress());
@@ -179,16 +181,26 @@ contract TellorFund is UsingTellor{
 	}
 
     /*
-    * @dev Getter function for
+    * @dev Getter function for amount available for withdraw by funder(specified address)
     * @param _user is the funder address 
+    * @return amount available for withdraw for the specified user address
     */
 	function getAvailableForWithdraw(address _user) external returns(uint){
 		return availableForWithdraw[_user];
 	}
 
     /*
-    * @dev Getter funciton for the proposal information by the id
+    * @dev Getter function for the proposal information by the id
     * @param _id is the proposal id 
+    * @return title of proposal
+    * @return description of proposal
+    * @return owner of proposal
+    * @return minAmountUSD for proposal to pass
+    * @return expirationDate of proposal
+    * @return trbBalance of proposal
+    * @return open- bool true if proposal is still open
+    * @return passed- bool true if proposal passed
+    * @return percentFunded 
     */
 	function getProposalById(uint _id) external view returns(string memory,string memory,address,uint,uint,uint,bool,bool,uint){
 		Proposal memory t = idToProposal[_id];
@@ -198,6 +210,7 @@ contract TellorFund is UsingTellor{
     /*
     * @dev Getter function for all proposals funded by the specified address
     * @param _funder is the funder address to look up
+    * @return two arrays containing all proposals and amounts contributed to each by the specified funder address
     */
 	function getProposalsByAddress(address _funder) public view returns(uint[] memory propArray,uint[] memory amountArray){
 		Statement[] memory theseStatements = addressToStatements[_funder];
@@ -213,6 +226,7 @@ contract TellorFund is UsingTellor{
     /*
     * @dev Getter function for funder address by proposal id 
     * @param _id is the proposal id
+    * @return all addresses that have funded the specified proposoal id
     */
 	function getAddressesById(uint _id) public view returns(address[] memory addArray){
 			Funder[] memory theseFunders = idToFunders[_id];
@@ -225,6 +239,7 @@ contract TellorFund is UsingTellor{
     /*
     * @dev Gets the percent funded for the specified proposal
     * @param _id is the proposal id
+    * @return the percent funded for the specified proposal id
     */
 	function percentFunded(uint _id) public view returns(uint){
 			Proposal memory thisProp = idToProposal[_id];
@@ -245,6 +260,7 @@ contract TellorFund is UsingTellor{
 		else if(_timestamp > now - 60 minutes){
 			for(uint i=120;i< 2400;i++){
 				(_didget,_value,_timestamp) = getAnyDataAfter(tellorPriceID,now - i * 60);
+				//if the value was obtained within the hour, stop looping.
 				if(_didget && _timestamp < now - 60 minutes){
 					i = 2400;
 				}
@@ -256,8 +272,10 @@ contract TellorFund is UsingTellor{
 		}
 		return _value/granularity;
 	}
+	
     /*
     * @dev Getter for proposal count
+    * @return the number of proposals
     */
 	function getProposalCount() public view returns(uint){
 		return proposalCount -1;
@@ -265,6 +283,7 @@ contract TellorFund is UsingTellor{
 
     /*
     * @dev Getter function for Tellor's address
+    * @param the Tellor's address
     */
 	function tellorAddress() public view returns(address){
 		return tellorUserContract.tellorStorageAddress();

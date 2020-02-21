@@ -170,22 +170,24 @@ contract('Testing Derivative Contracts', function (accounts) {
     it("Test Lots of open proposals", async function(){
         for(var i =1;i<6;i++){
             await web3.eth.sendTransaction({to:master._address,from:accounts[i],gas:2000000,data:tellor.methods.submitMiningSolution("1",1,1200).encodeABI()}) 
-
         }
+
         for(var i =1;i<6;i++){
             await web3.eth.sendTransaction({to:master._address,from:accounts[i],gas:2000000,data:tellor.methods.approve(tellorFund.address,web3.utils.toWei("1",'ether')).encodeABI()})
         	await tellorFund.createProposal("test","give Nick a raise",1000,i,{from:accounts[i]});   
         }  
+
         await advanceTime(86400 * 2);
         let count = await tellorFund.getAllOpenProposals();
         assert(count.length - 1 == 5, "count of proposals should work");
         assert(count[1] == 1, "open proposal array should work")
         for(var i =1;i<=3;i++){
-        	        await web3.eth.sendTransaction({to:master._address,from:accounts[1],gas:2000000,data:tellor.methods.approve(tellorFund.address,web3.utils.toWei("1",'ether')).encodeABI()})	
+        	await web3.eth.sendTransaction({to:master._address,from:accounts[1],gas:2000000,data:tellor.methods.approve(tellorFund.address,web3.utils.toWei("1",'ether')).encodeABI()})	
         	await tellorFund.fund(i,web3.utils.toWei("1",'ether'),{from:accounts[1]})
         	await web3.eth.sendTransaction({to:master._address,from:accounts[i],gas:2000000,data:tellor.methods.approve(tellorFund.address,web3.utils.toWei("1",'ether')).encodeABI()})	
         	await tellorFund.fund(1,web3.utils.toWei("1",'ether'),{from:accounts[i]})
    		}
+        
    		let myguys = await tellorFund.getProposalsByAddress(accounts[1])
         console.log("myguys.propArray.length", myguys.propArray.length)
    		assert(myguys.propArray.length == 5, "proposals by address should work--5")
