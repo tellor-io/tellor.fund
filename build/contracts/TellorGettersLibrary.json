@@ -7051,8 +7051,8 @@
       "transactionHash": "0x7f636caf4e64fdcec1e07e69b76a0ebeab19cf4fe1f0aa9221e5eae6b9e8ddff"
     }
   },
-  "schemaVersion": "3.0.16",
-  "updatedAt": "2020-02-14T14:54:37.767Z",
+  "schemaVersion": "3.0.11",
+  "updatedAt": "2020-02-20T17:56:01.947Z",
   "devdoc": {
     "methods": {}
   },

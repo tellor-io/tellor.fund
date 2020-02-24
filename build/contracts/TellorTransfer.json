@@ -13792,8 +13792,8 @@
       "transactionHash": "0x4bc34abb8b7c8b3393a8d10a7b4b56fae69b8e2ef36623ae58a69d01f5a3c3af"
     }
   },
-  "schemaVersion": "3.0.16",
-  "updatedAt": "2020-02-14T14:54:37.720Z",
+  "schemaVersion": "3.0.11",
+  "updatedAt": "2020-02-20T17:56:02.029Z",
   "devdoc": {
     "details": "Contais the methods related to transfers and ERC20. Tellor.sol and TellorGetters.sol\r reference this library for function's logic.\r Many of the functions have been commented out for simplicity. \r",
     "methods": {
