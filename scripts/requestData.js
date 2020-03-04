@@ -5,7 +5,7 @@ var TellorFund = artifacts.require("./TellorFund.sol");
 var TellorMaster = artifacts.require("./usingTellor/contracts/TellorMaster.sol");
 const Tellor = require("usingtellor/build/contracts/Tellor.json")
 
-let masterAddress = "0x724D1B69a7Ba352F11D73fDBdEB7fF869cB22E19"
+let masterAddress = "0xFe41Cb708CD98C5B20423433309E55b53F79134a"
 function sleep_s(secs) {
   secs = (+new Date) + secs * 1000;
   while ((+new Date) < secs);
