@@ -15312,8 +15312,8 @@
       "transactionHash": "0xa8c6c00f0edb7c82c6d153ba25f7a779a22309ebe972e1a31f5dea446f10da61"
     }
   },
-  "schemaVersion": "3.0.16",
-  "updatedAt": "2020-02-14T14:54:37.802Z",
+  "schemaVersion": "3.0.11",
+  "updatedAt": "2020-02-20T17:56:01.903Z",
   "devdoc": {
     "methods": {
       "addTipWithEther(uint256)": {

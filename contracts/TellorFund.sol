@@ -12,8 +12,8 @@ import "usingtellor/contracts/UsingTellor.sol";
 contract TellorFund is UsingTellor{
     /*Variables*/
 	uint private proposalCount;
-	uint public tellorPriceID;
-	uint public granularity;
+	uint public tellorPriceID; //??
+	uint public granularity; //??
 	uint[] openProposals;
 
 	struct Proposal{
@@ -36,9 +36,10 @@ contract TellorFund is UsingTellor{
 		uint id;
 		uint amount;
 	}
+
 	mapping(uint => Proposal) idToProposal;
 	mapping(uint => Funder[]) idToFunders;
-	mapping(address => Statement[]) addressToStatements;
+	mapping(address => Statement[]) addressToStatements;//???
 	mapping(uint => uint) idToOpenIndex;
 	mapping(address => uint) availableForWithdraw;
 
@@ -73,7 +74,7 @@ contract TellorFund is UsingTellor{
     //be sure to approve first
 	function createProposal(string calldata _title, string calldata _desc,uint _minAmountUSD, uint _daystilComplete) external returns(uint _id){
 		Tellor _tellor = Tellor(tellorUserContract.tellorStorageAddress());
-        require(_tellor.transferFrom(msg.sender,address(this),1e18), "Virgin Sacrifice Failed");
+        require(_tellor.transferFrom(msg.sender,address(this),1e18), "Fee to create proposal failed to tranfer");
 		require(_daystilComplete < 30);
 		_id = proposalCount;
 		proposalCount++;
@@ -93,12 +94,11 @@ contract TellorFund is UsingTellor{
         	id:_id,
         	amount:0
         });
-        addressToStatements[msg.sender].push(thisStatement);
+        addressToStatements[msg.sender].push(thisStatement);//what is the statememt???
 
 
 	emit NewProposal(_id,_title,_desc,_minAmountUSD,_daystilComplete);
 	}
-
 
     /*
     * @dev Funds a specified proposoal
@@ -126,7 +126,6 @@ contract TellorFund is UsingTellor{
         emit ProposalFunded(_id,msg.sender,_amountTRB);
 
 	}
-
 
     /*
     * @dev Closes the specified proposal. Closes the proposal, it makes the funders 
@@ -165,7 +164,6 @@ contract TellorFund is UsingTellor{
 		thisProp.trbBalance = 0;
 	}
 
-
     /*
     * @dev Allows funders to withdraw their funds if the proposal was unsuccessful
     */
@@ -176,7 +174,6 @@ contract TellorFund is UsingTellor{
 		_tellor.transfer(msg.sender,_amt);
  	}
 
-
     /*
     * @dev Getter function for all open proposals
     * @returns an array with all open proposals
@@ -184,7 +181,6 @@ contract TellorFund is UsingTellor{
 	function getAllOpenProposals() external view returns(uint[] memory){
 		return openProposals;
 	}
-
 
     /*
     * @dev Getter function for amount available for withdraw by funder(specified address)
@@ -245,7 +241,6 @@ contract TellorFund is UsingTellor{
 			}
 	}
 
-
     /*
     * @dev Gets the percent funded for the specified proposal
     * @param _id is the proposal id
@@ -272,6 +267,7 @@ contract TellorFund is UsingTellor{
 		else if(_timestamp > now - 60 minutes){
 			for(uint i=120;i< 2400;i++){
 				(_didget,_value,_timestamp) = getAnyDataAfter(tellorPriceID,now - i * 60);
+				//if the value was obtained within the hour, stop looping.
 				if(_didget && _timestamp < now - 60 minutes){
 					i = 2400;
 				}
@@ -291,7 +287,6 @@ contract TellorFund is UsingTellor{
 	function getProposalCount() public view returns(uint){
 		return proposalCount -1;
 	}
-
 
 	/*
     * @dev Getter function for Tellor's address
