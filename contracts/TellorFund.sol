@@ -71,6 +71,7 @@ contract TellorFund is UsingTellor{
     * @param _daystilComplete number of days allowed for funding???
     * @return proposal Id
     */
+    //be sure to approve first
 	function createProposal(string calldata _title, string calldata _desc,uint _minAmountUSD, uint _daystilComplete) external returns(uint _id){
 		Tellor _tellor = Tellor(tellorUserContract.tellorStorageAddress());
         require(_tellor.transferFrom(msg.sender,address(this),1e18), "Fee to create proposal failed to tranfer");
@@ -175,6 +176,7 @@ contract TellorFund is UsingTellor{
 
     /*
     * @dev Getter function for all open proposals
+    * @returns an array with all open proposals
     */
 	function getAllOpenProposals() external view returns(uint[] memory){
 		return openProposals;
@@ -188,6 +190,7 @@ contract TellorFund is UsingTellor{
 	function getAvailableForWithdraw(address _user) external returns(uint){
 		return availableForWithdraw[_user];
 	}
+
 
     /*
     * @dev Getter function for the proposal information by the id
@@ -207,6 +210,7 @@ contract TellorFund is UsingTellor{
 		return (t.title,t.description,t.owner,t.minAmountUSD,t.expirationDate,t.trbBalance,t.open,t.passed,100 * (t.trbBalance* viewTellorPrice()/1e18) / t.minAmountUSD);
 	}
 
+
     /*
     * @dev Getter function for all proposals funded by the specified address
     * @param _funder is the funder address to look up
@@ -223,10 +227,11 @@ contract TellorFund is UsingTellor{
 		return (propArray,amountArray);
 	}
 
+
     /*
     * @dev Getter function for funder address by proposal id 
     * @param _id is the proposal id
-    * @return all addresses that have funded the specified proposoal id
+    * @return array of all addresses that have funded the specified proposoal id
     */
 	function getAddressesById(uint _id) public view returns(address[] memory addArray){
 			Funder[] memory theseFunders = idToFunders[_id];
@@ -246,8 +251,10 @@ contract TellorFund is UsingTellor{
 			return  100 * (thisProp.trbBalance* viewTellorPrice()/1e18) / thisProp.minAmountUSD ;
 	}
 
+
     /*
     * @dev Gets Tellor's Price for the request ID specified in the constructor
+    * @returns Tellors price value
     */
 	function viewTellorPrice() public view returns(uint){
 		bool _didget;
@@ -272,7 +279,7 @@ contract TellorFund is UsingTellor{
 		}
 		return _value/granularity;
 	}
-	
+
     /*
     * @dev Getter for proposal count
     * @return the number of proposals
@@ -281,9 +288,9 @@ contract TellorFund is UsingTellor{
 		return proposalCount -1;
 	}
 
-    /*
+	/*
     * @dev Getter function for Tellor's address
-    * @param the Tellor's address
+    * @param the Tellor's Master address
     */
 	function tellorAddress() public view returns(address){
 		return tellorUserContract.tellorStorageAddress();
