@@ -4408,8 +4408,8 @@
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.0.11",
-  "updatedAt": "2020-02-20T17:56:01.887Z",
+  "schemaVersion": "3.0.16",
+  "updatedAt": "2020-03-10T18:09:56.534Z",
   "devdoc": {
     "methods": {
       "defineTellorCodeToStatusCode(uint256,int256)": {

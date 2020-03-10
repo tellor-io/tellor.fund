@@ -7540,8 +7540,8 @@
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.0.11",
-  "updatedAt": "2020-02-20T17:56:01.920Z",
+  "schemaVersion": "3.0.16",
+  "updatedAt": "2020-03-10T18:09:56.581Z",
   "devdoc": {
     "methods": {
       "addTip(uint256,uint256)": {

@@ -207,7 +207,7 @@ contract TellorFund is UsingTellor{
     */
 	function getProposalById(uint _id) external view returns(string memory,string memory,address,uint,uint,uint,bool,bool,uint){
 		Proposal memory t = idToProposal[_id];
-		return (t.title,t.description,t.owner,t.minAmountUSD,t.expirationDate,t.trbBalance,t.open,t.passed,100 * (t.trbBalance* viewTellorPrice()/1e20) / t.minAmountUSD);
+		return (t.title,t.description,t.owner,t.minAmountUSD,t.expirationDate,t.trbBalance,t.open,t.passed,100 * (t.trbBalance* viewTellorPrice()/1e18) / t.minAmountUSD);
 	}
 
 
@@ -248,7 +248,7 @@ contract TellorFund is UsingTellor{
     */
 	function percentFunded(uint _id) public view returns(uint){
 			Proposal memory thisProp = idToProposal[_id];
-			return  (thisProp.trbBalance* viewTellorPrice()/1e18) / thisProp.minAmountUSD ;
+			return  100 * (thisProp.trbBalance* viewTellorPrice()/1e18) / thisProp.minAmountUSD ;
 	}
 
 
@@ -277,7 +277,7 @@ contract TellorFund is UsingTellor{
 			}
 
 		}
-		return _value*100/granularity;
+		return _value/granularity;
 	}
 
     /*

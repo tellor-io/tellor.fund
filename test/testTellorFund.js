@@ -124,7 +124,7 @@ contract('Testing Derivative Contracts', function (accounts) {
         assert(id == 1, "tellor ID should be correct");
         let vars = await userContract.methods.getCurrentValue(1).call()
         let price = await tellorFund.viewTellorPrice();
-        assert(price - 1200 == 0, "price should be 1200");
+        assert(price - 120000 == 0, "price should be 1200");
         let prop = await tellorFund.getProposalById(1);
 		assert(prop[0] == "test", "title should be correct")
 		assert(prop[1] == "give Nick a raise", "desc should be correct")

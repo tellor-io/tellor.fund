@@ -15259,61 +15259,9 @@
     "name": "solc",
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
-  "networks": {
-    "1581691961714": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "_previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "_newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        },
-        "0x4e8ad04c3fba0cbea0ab1df84b92a72a289ddf64da15f4c1c396891d37c39b01": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "_newPrice",
-              "type": "uint256"
-            }
-          ],
-          "name": "NewPriceSet",
-          "type": "event",
-          "signature": "0x4e8ad04c3fba0cbea0ab1df84b92a72a289ddf64da15f4c1c396891d37c39b01"
-        },
-        "0x5c6c85f31e475f047482022539bfe2a3941c15e582053b7420f22e5e8cc5d7f6": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "_descriptorSet",
-              "type": "address"
-            }
-          ],
-          "name": "NewDescriptorSet",
-          "type": "event",
-          "signature": "0x5c6c85f31e475f047482022539bfe2a3941c15e582053b7420f22e5e8cc5d7f6"
-        }
-      },
-      "links": {},
-      "address": "0x387D30BFd25F3097DeC4F8cb8f4073bC76700d48",
-      "transactionHash": "0xa8c6c00f0edb7c82c6d153ba25f7a779a22309ebe972e1a31f5dea446f10da61"
-    }
-  },
-  "schemaVersion": "3.0.11",
-  "updatedAt": "2020-02-20T17:56:01.903Z",
+  "networks": {},
+  "schemaVersion": "3.0.16",
+  "updatedAt": "2020-03-10T18:09:56.570Z",
   "devdoc": {
     "methods": {
       "addTipWithEther(uint256)": {

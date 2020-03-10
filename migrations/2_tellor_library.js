@@ -11,6 +11,9 @@ var TellorFund = artifacts.require("./TellorFund.sol");
 /**
 *@dev Use this for setting up contracts for testing 
 */
+
+//userContractAddress = ;
+
 function sleep_s(secs) {
   secs = (+new Date) + secs * 1000;
   while ((+new Date) < secs);
@@ -47,7 +50,7 @@ module.exports = async function (deployer) {
       })
     })
   });
-  
+  // await deployer.deploy(TellorFund,UserContract.address,,1)
   console.log("Tellor Fund Address", TellorFund.address)
 
 
